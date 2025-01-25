@@ -32,6 +32,34 @@ Example Responses:
 
 Add the required logic below to complete the API.
 */
+app.get('/',(req,res)=>{
+  const name = req.query.name
+  if (!name) {
+    return res.status(400).json({ error: "Please provide a name as a query parameter." });
+}
+
+// Get the current day of the week
+const dayOfWeek = new Date().toLocaleString('en-US', { weekday: 'long' });
+
+// Define messages for each day
+const dayMessages = {
+    Monday: "Happy Monday! Start your week with energy!",
+    Friday: "It's Friday! The weekend is near!",
+};
+
+// Default message for other days
+const defaultMessage = "Have a wonderful day!";
+const dayMessage = dayMessages[dayOfWeek] || defaultMessage;
+
+// Create the JSON response
+const response = {
+    welcomeMessage: `Hello, ${name}! Welcome to our assistant app!`,
+    dayMessage: dayMessage,
+};
+
+// Send the response
+res.json(response);
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {
